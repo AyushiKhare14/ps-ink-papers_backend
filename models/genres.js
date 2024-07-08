@@ -1,28 +1,3 @@
-// const { DataTypes } = require('sequelize')
-// //const sequelize = require('../connection')
-
-// module.exports = (sequelize) => {
-//     const Genre = sequelize.define('Genres', {
-//         genre_id: {
-//             type: DataTypes.INTEGER,
-//             autoIncrement: true,
-//             primaryKey: true,
-            
-//         },
-//         genre_name: {
-//             type: DataTypes.STRING,
-//             allowNull: false,
-//             validate:{
-//                 is: /^[a-zA-Z ]*$/,
-//                 notNull: true,
-//                 notEmpty: true,
-//             }
-//         }
-//       })
-//   return Genre
-// };
-
-
 const { DataTypes } = require('sequelize')
 const sequelize = require('../connection')
 const Genre = sequelize.define('Genre', {

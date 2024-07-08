@@ -1,16 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const sequelize = require('../connection')
-// const BookModel = require('../models/books');
-// const Book = BookModel(sequelize);
-// const AuthorModel = require('../models/authors');
-// const Author = AuthorModel(sequelize)
-// const GenresModel = require('../models/genres');
-// const Genre = GenresModel(sequelize)
-//const Authors = AuthorModel(sequelize)
-const Authors = require('../models/authors')
+// const sequelize = require('../connection')
+const Author = require('../models/authors')
 const Book = require('../models/books')
-//const Authors = require('../models/author')
 const Genre = require('../models/genres')
 
 
@@ -19,7 +11,7 @@ router.get('/', async (req, res) => {
   try {
     console.log(Genre.associations)
     const books = await Book.findAll({
-        include: [Genre]
+        include: [Author, Genre]
       });
     res.json(books);
   } catch (err) {
