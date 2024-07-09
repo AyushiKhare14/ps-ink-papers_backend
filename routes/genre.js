@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const sequelize = require('../connection')
-// const GenreModel = require('../models/genres');
-// const Genre = GenreModel(sequelize);
 const Genre = require('../models/genres');
 
 router.get('/', async (req, res) => {

@@ -4,6 +4,35 @@ const router = express.Router();
 const Author = require('../models/authors')
 const Book = require('../models/books')
 const Genre = require('../models/genres')
+const multer = require('multer')
+const path = require('path')
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images')
+    },
+    filename: (req, file, cb) =>{
+        cb(null, Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: '1000000'},
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png/
+        const mimeType = fileTypes.test(file.mimetype)
+        const extname = fileTypes.test(path.extname(file.originalname))
+
+        if(mimeType && extname){
+            return cb(null, true)
+        }
+        cb("Incorrect file format. Only jpeg, jpg and png can be used.")
+        
+    }
+}).single('image')
+
 
 
 router.get('/', async (req, res) => {
@@ -34,11 +63,15 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST a new book
-router.post('/', async (req, res) => {
-    console.log("inside post")
+router.post('/', upload ,async (req, res) => {
   try {
-    console.log(req.body)
-    const book = await Book.create(req.body);
+    const book_img = {"image": req.file.path};
+    const book_detail = req.body;
+    const book = {
+        ...book_detail, ...book_img
+    };
+    //console.log(book)
+    await Book.create(book);
     res.status(201).json(book);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -77,5 +110,6 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 module.exports = router;

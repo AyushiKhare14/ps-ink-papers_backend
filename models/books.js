@@ -2,6 +2,9 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../connection')
 const Author = require('./authors')
 const Genre = require('./genres')
+
+
+
 const Book = sequelize.define('Book', {
   // Model attributes
     book_id: {
@@ -23,6 +26,9 @@ const Book = sequelize.define('Book', {
     publication_date: {
         type: DataTypes.DATE,
         allowNull: false,
+    },
+    image: {
+        type: DataTypes.STRING,
     },
     author_id: {
         type: DataTypes.INTEGER,
@@ -47,5 +53,6 @@ async function syncModel() {
   console.log('Book model was synchronized successfully.')
 }
 syncModel()
+
 
 module.exports = Book;

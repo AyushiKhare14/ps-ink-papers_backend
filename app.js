@@ -14,6 +14,10 @@ app.use('/api/author', authorRoutes);
 app.use('/api/book', bookRoutes);
 app.use('/api/genre', genreRoutes);
 
+//static images folder
+
+app.use('/images', express.static('./images'))
+
 app.get('/', (req, res) => {
   res.send('Welcome to Pustakalay Administrator!');
 });
