@@ -7,7 +7,10 @@ const Author = require('../models/authors');
 
 router.get('/', async (req, res) => {
   try {
-    const authors = await Author.findAll();
+    const authors = await Author.findAll({
+      order: [
+        ['createdAt', 'DESC'],]
+    });
     res.json(authors);
   } catch (err) {
     res.status(500).json({ error: err.message });

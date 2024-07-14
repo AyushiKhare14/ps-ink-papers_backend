@@ -5,7 +5,13 @@ const Genre = require('../models/genres');
 
 router.get('/', async (req, res) => {
   try {
-    const genre = await Genre.findAll();
+    const genre = await Genre.findAll(
+      {
+        order: [
+          ['createdAt', 'DESC'],]
+      }
+    );
+    console.log(genre)
     res.json(genre);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -25,6 +31,21 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+// Check if genre already exists 
+// router.get('/:genrename', async (req, res) => {
+//   try {
+//     const genre = await Genre.findByPk(req.params.id);
+//     if (genre) {
+//       res.json(genre);
+//     } else {
+//       res.status(404).json({ error: 'Genre not found' });
+//     }
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 // POST a new genre
 router.post('/', async (req, res) => {

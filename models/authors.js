@@ -18,7 +18,7 @@ const Author = sequelize.define('Author', {
         }
     },
     biography: {
-        type: DataTypes.TEXT('medium'),
+        type: DataTypes.TEXT('tiny'),
         allowNull: false,
         validate: {
             notNull: true,

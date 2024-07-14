@@ -40,7 +40,9 @@ router.get('/', async (req, res) => {
   try {
     console.log(Genre.associations)
     const books = await Book.findAll({
-        include: [Author, Genre]
+        include: [Author, Genre],
+        order: [
+          ['createdAt', 'DESC'],]
       });
     res.json(books);
   } catch (err) {
@@ -65,12 +67,15 @@ router.get('/:id', async (req, res) => {
 // POST a new book
 router.post('/', upload ,async (req, res) => {
   try {
+    console.log("======insde post method")
     const book_img = {"image": req.file.path};
+    console.log("======"+ book_img)
     const book_detail = req.body;
+    console.log(book_detail)
     const book = {
         ...book_detail, ...book_img
     };
-    //console.log(book)
+    console.log(book)
     await Book.create(book);
     res.status(201).json(book);
   } catch (err) {
